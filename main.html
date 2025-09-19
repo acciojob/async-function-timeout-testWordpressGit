@@ -1,20 +1,44 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async Function with Timeout</title>
+</head>
+<body>
+  <form>
+    <input type="text" id="text" placeholder="Enter your message" />
+    <input type="number" id="delay" placeholder="Enter delay in ms" />
+    <button type="button" id="btn">Submit</button>
+  </form>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <div id="output"></div>
 
-  <body>
-    <!-- the entire body must be written by student -->
-    <form onsubmit="return false">
-      <input type="text" id="text" placeholder="Text" />
-      <input type="number" id="delay" placeholder="Delay" />
-      <button type="button" id="btn">Submit</button>
-    </form>
+  <script>
+    // Utility function to create a delay
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-    <div id="output"></div>
+    // Async function to display message after delay
+    async function displayMessage() {
+      const message = document.getElementById("text").value;
+      const delay = parseInt(document.getElementById("delay").value, 10);
 
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+      if (!message || isNaN(delay)) {
+        document.getElementById("output").textContent = "⚠️ Please enter both text and delay.";
+        return;
+      }
+
+      // Wait for the delay
+      await wait(delay);
+
+      // Display the message
+      document.getElementById("output").textContent = message;
+    }
+
+    // Add event listener to button
+    document.getElementById("btn").addEventListener("click", displayMessage);
+  </script>
+</body>
 </html>
